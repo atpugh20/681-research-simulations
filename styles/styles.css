@@ -1,0 +1,66 @@
+html 
+{
+    background-color: rgb(25,25,25);
+    padding: 50px;
+}
+
+.container 
+{
+    max-width: 1000px;
+    display: block;
+    margin: auto;
+    background-color: rgb(19,19,19);
+    padding: 50px;
+}
+
+.default-text-color 
+{
+    color: aliceblue;
+}
+
+.title-text 
+{
+    background-color: rgb(10,10,10);
+    margin-top: 0;
+    padding: 5px;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.button-list 
+{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: left;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.home-link, 
+.back-button 
+{
+    display: block;
+    text-decoration: none;
+    background-color: rgb(10,10,10);
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+    height: 50px;
+    width: 300px;
+    line-height: 50px;
+}
+
+.home-link:hover,
+.back-button:hover
+{
+    background-color: rgb(50, 50, 50);
+}
+
+#canvas 
+{
+    display: block;
+    margin: auto;
+    margin-top: 100px;
+}
