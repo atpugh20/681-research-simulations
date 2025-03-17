@@ -1,7 +1,7 @@
 class Ball {
     constructor(x = 0, y = 0, radius = 5, color = "white") {
         this.pos = new Vector(x, y);
-        this.vel = new Vector;
+        this.vel = new Vector(0, 0);
         this.acc = new Vector(0, 9800);
         this.radius = radius;
         this.color = color;
@@ -9,11 +9,7 @@ class Ball {
     }
 
     update(delta_time) {
-        /**
-         * Updates the position of the ball based on the velocity
-         * and acceleration attributes.
-         */
-
+        // Eular method for the numerical integration
         this.vel.addVector(this.acc.getMult(delta_time));
         this.pos.addVector(this.vel.getMult(delta_time));
 
@@ -41,10 +37,6 @@ class Ball {
     }
 
     draw(ctx) {
-        /**
-         * Draws the ball to the canvas using the position, radius,
-         * and color attributes
-         */
         ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);

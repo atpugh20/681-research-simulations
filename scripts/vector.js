@@ -44,6 +44,10 @@ class Vector {
         this.y *= scalar;
     }
 
+    getMult(scalar) {
+        return new Vector(this.x * scalar, this.y * scalar);
+    }
+
     div(scalar) {
         /**
          * Divide both x and y by the scalar argument.

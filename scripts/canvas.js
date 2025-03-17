@@ -6,8 +6,6 @@ canvas.width = canvas.height = canvas_length;
 
 const FPS = 60;
 
-console.log(window.innerHeight);
-
 function clearCanvas() {
   /*
    * Wipes the canvas in between each frame to display updated positions.
