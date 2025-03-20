@@ -14,8 +14,8 @@ class Ball {
     this.pos.addVector(this.vel.getMult(delta_time));
 
     // Stop ball on ground
-    if (this.pos.y > canvas_length - this.radius) {
-      this.pos.y = canvas_length - this.radius;
+    if (this.pos.y > canvas_length) {
+      this.pos.y = canvas_length;
       this.grounded = true;
       this.color = "red";
       this.vel.y = 0;
@@ -27,9 +27,5 @@ class Ball {
     ctx.beginPath();
     ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
     ctx.fill();
-  }
-
-  run_simulations(sim_count) {
-    console.log("Run sim for:", canvas_length - ball.pos.y);
   }
 }

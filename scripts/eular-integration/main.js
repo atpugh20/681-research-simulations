@@ -4,12 +4,12 @@ const G = 9.80655;
 const SIM_TIMES = {};
 let actual_times = {};
 
-const SIM_COUNT = 1000;
+const SIM_COUNT = 50;
 const DISTANCES = [10, 50, 100, 500, 1000];
+let s_iterator = 0;
 let d_iterator = 0;
 
 let reached_ground = false;
-let first_sim = true;
 let running_sims = true;
 let time_hit = 0;
 
@@ -45,29 +45,37 @@ function draw(current_time) {
   clearCanvas();
   delta_time = (current_time - last_frame_time) / 1000;
   last_frame_time = current_time;
-  if (running_sims) {
-    if (first_sim) {
-      ball.run_simulations(SIM_COUNT);
-      first_sim = false;
-    }
 
+  // Start simulations
+  if (running_sims) {
+    // Update ball for new frame
     ball.update(delta_time);
     ball.draw(ctx);
 
-    time_hit += delta_time;
+    time_hit += delta_time; // update current sim time
+
+    // Check if the ball has hit the ground
     if (ball.grounded) {
-      SIM_TIMES[DISTANCES[d_iterator]] = time_hit;
-      time_hit = 0;
-      if (d_iterator == DISTANCES.length - 1) {
+      // Check if it is the last sim
+      if (s_iterator == SIM_COUNT) {
+        s_iterator = 0;
+        d_iterator++;
+        SIM_TIMES[DISTANCES[d_iterator]] = time_hit;
+      }
+
+      console.log(d_iterator, ":", s_iterator, "at", time_hit);
+
+      if (d_iterator == DISTANCES.length) {
         console.log("Finished.");
         return;
       } else {
-        d_iterator++;
-        first_sim = true;
+        s_iterator++;
         ball.pos.y = canvas_length - DISTANCES[d_iterator];
+        ball.vel.y = 0;
         ball.grounded = false;
         ball.color = "white";
       }
+      time_hit = 0;
     }
   }
 
