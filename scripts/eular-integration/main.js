@@ -37,8 +37,11 @@ function get_times_to_ground(heights, gravity) {
 function setup() {
   last_frame_time = 0;
   actual_times = get_times_to_ground(DISTANCES, G);
-
+  for (let i = 0; i < DISTANCES.length; i++) {
+    SIM_TIMES[DISTANCES[i]] = [];
+  }
   console.log(actual_times);
+  console.log(SIM_COUNT);
 }
 
 function draw(current_time) {
@@ -60,9 +63,9 @@ function draw(current_time) {
       if (s_iterator == SIM_COUNT) {
         s_iterator = 0;
         d_iterator++;
-        SIM_TIMES[DISTANCES[d_iterator]] = time_hit;
       }
 
+      console.log(SIM_TIMES);
       console.log(d_iterator, ":", s_iterator, "at", time_hit);
 
       if (d_iterator == DISTANCES.length) {
