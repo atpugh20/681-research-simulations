@@ -5,21 +5,12 @@ class Ball {
     this.acc = new Vector(0, 9.80665);
     this.radius = radius;
     this.color = color;
-    this.grounded = false;
   }
 
   update(delta_time) {
     // Eular method for the numerical integration
     this.vel.addVector(this.acc.getMult(delta_time));
     this.pos.addVector(this.vel.getMult(delta_time));
-
-    // Stop ball on ground
-    if (this.pos.y > canvas_length) {
-      this.pos.y = canvas_length;
-      this.grounded = true;
-      this.color = "red";
-      this.vel.y = 0;
-    }
   }
 
   draw(ctx) {

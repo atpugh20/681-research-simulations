@@ -1,80 +1,44 @@
 const canvas_width = canvas.width = 200;
 let delta_time;
-let last_frame_time;
+let last_frame_time = 0;
 
 const RADIUS = 10;
 const G = 9.80655;
-const SIM_COUNT = 1;
-const DISTANCES = [10, 50, 100, 500, 1000];
-const SPEED = 1;
+const SIM_COUNT = 10;
+const TIMES = [1, 5, 10, 30, 60, 120];  // Seconds
+const SPEED = 50;
 
+const sim_dist = {};
+let actual_dist = {};
+
+let sim_time = 0;
 let sim_iterator = 0;
-let dist_iterator = 0;
+let time_iterator = 0;
 
-const sim_times = {};
-let actual_times = {};
-let reached_ground = false;
+let first_sim = true;
 let running_sims = true;
-let is_first_sim = true;
-let time_hit = 0;
+let ball;
 
-const ball = new Ball(
-    canvas_width / 2,
-    canvas_length - DISTANCES[0],
-    RADIUS,
-    "white"
-);
-
-function get_times_to_ground(heights, gravity) {
-    /**
-     * Calculates what the times to hit the ground SHOULD be based off
-     * the distances given in the array heights. It then returns a map
-     * with the height as the key and the time as the value.
-     */
-
-    const times = {};
-
-    for (let i = 0; i < heights.length; i++) {
-        let h = heights[i];
-        times[h] = Math.sqrt((2 * h) / gravity);
+function get_actual_distances(times, gravity) {
+    const heights = {};
+    let t;
+    for (let i = 0; i < times.length; i++) {
+        t = times[i];
+        heights[t] = 0.5 * gravity * t * t;
     }
 
-    return times;
-}
-
-function get_array_average(input_array) {
-    if (input_array.length == 0) return 0;
-
-    let sum = 0;
-    for (let i = 0; i < input_array.length; i++)
-        sum += input_array[i];
-
-    return sum / input_array.length;
-}
-
-function get_errors(actuals, sims, distances) {
-    let error = 0.0;
-    const errors = {};
-
-    for (let i = 0; i < distances.length; i++) {
-        errors[distances[i]] = [];
-        for (let j = 0; j < sims[distances[i]].length; j++) {
-            console.log(sims[distances[i]][j]);
-            console.log(actuals[distances[i]]);
-            error = sims[distances[i]][j] - actuals[distances[i]];
-            errors[distances[i]].push(error);
-        }
-    }
-    return errors;
+    return heights;
 }
 
 function setup() {
-    last_frame_time = 0;
-    actual_times = get_times_to_ground(DISTANCES, G);
-    for (let i = 0; i < DISTANCES.length; i++) {
-        sim_times[DISTANCES[i]] = [];
-    }
-    console.log(actual_times);
+    actual_dist = get_actual_distances(TIMES, G);
+
+    ball = new Ball(
+        canvas_width / 2,
+        0,
+        RADIUS,
+        "white"
+    );
 }
 
 function draw(current_time) {
@@ -85,44 +49,47 @@ function draw(current_time) {
 
     // Start simulations
     if (running_sims) {
+
         // Update ball for new frame
         ball.update(delta_time);
         ball.draw(ctx);
 
-        time_hit += delta_time; // update current sim time
+        // Update current sim time
+        sim_time += delta_time;
 
-        // Check if the ball has hit the ground
-        if (ball.grounded) {
+        // If the right time has passed, log, then move to next time
+        if (sim_time >= TIMES[time_iterator]) {
+            let saved_dist = ball.pos.y;
+            let calc_dist = actual_dist[TIMES[time_iterator]];
 
-            // Ignore very first simulation. Is often an inaccurate time.
-            if (is_first_sim) {
-                is_first_sim = false;
+            // Skip the first simulation due to time inaccuracy
+            if (first_sim) {
+                first_sim = false;
             } else {
-                sim_times[DISTANCES[dist_iterator]].push(time_hit);
                 sim_iterator++;
+                console.log(`Time: ${sim_time}s`);
+                console.log(`Sim Distance: ${saved_dist}m`);
+                console.log(`Cal Distance: ${calc_dist}m`);
+                console.log(`Abs Error: ${Math.abs(saved_dist - calc_dist)}m`);
+                console.log("----------------------------------------");
             }
 
-            // Check if this is the last sim for this distance
-            if (sim_iterator == SIM_COUNT) {
-                sim_iterator = 0;
-                dist_iterator++;
-            }
+            // Reset ball to top of canvas
+            sim_time = 0;
+            ball.pos.y = 0;
+            ball.vel.mult(0);
+        }
 
-            // Check if it is the final sim overall
-            if (dist_iterator == DISTANCES.length) {
-                console.log(sim_times);
-                const errors = get_errors(actual_times, sim_times, DISTANCES);
-                console.log(errors);
-                console.log("Finished.");
-                return;
-            }
+        // Check if the final sim has been completed
+        if (sim_iterator == SIM_COUNT) {
+            time_iterator++;
+            sim_iterator = 0;
+        }
 
-            // Reset ball for next simulation
-            ball.pos.y = canvas_length - DISTANCES[dist_iterator];
-            ball.vel.y = 0;
-            ball.grounded = false;
-            ball.color = "white";
-            time_hit = 0;
+        // Check if the final test has been completed
+        if (time_iterator == TIMES.length) {
+            console.log("Finished.")
+            running_sims = false;
         }
     }
 
