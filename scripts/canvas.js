@@ -1,7 +1,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const canvas_length =
-  window.innerWidth < 900 || window.innerHeight < 600 ? 350 : 600;
+const canvas_length = 600;
 canvas.width = canvas.height = canvas_length;
 
 const FPS = 60;
