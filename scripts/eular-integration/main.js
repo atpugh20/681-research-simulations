@@ -4,7 +4,7 @@ let last_frame_time = 0;
 
 const RADIUS = 10;
 const G = 9.80655;
-const SIM_COUNT = 10;
+const SIM_COUNT = 1;
 const TIMES = [1, 5, 10, 30, 60, 120]; // Seconds
 const SPEED = 50;
 
@@ -20,24 +20,25 @@ let first_sim = true;
 let running_sims = true;
 let ball;
 
-function get_actual_distances(times, gravity) {
-  const heights = {};
-  let t;
-  for (let i = 0; i < times.length; i++) {
-    t = times[i];
-    heights[t] = 0.5 * gravity * t * t;
+function give_sim_time() {
+  let time = 0;
+  for (let i = 0; i < TIMES.length; i++) {
+    time += TIMES[i] * SIM_COUNT;
   }
-
-  return heights;
+  console.log("This sim will take: " + time + " seconds.");
 }
 
 function setup() {
-  actual_dist = get_actual_distances(TIMES, G);
+  for (let i = 0; i < TIMES.length; i++) {
+    actual_dist[TIMES[i]] = 0.5 * G * TIMES[i] * TIMES[i];
+  }
 
   for (let i = 0; i < TIMES.length; i++) {
     sim_dist[TIMES[i]] = [];
     errors[TIMES[i]] = [];
   }
+
+  give_sim_time();
 
   ball = new Ball(canvas_width / 2, 0, RADIUS, "white");
 }
