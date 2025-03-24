@@ -6,11 +6,10 @@ const RADIUS = 10;
 const G = 9.80655;
 const SIM_COUNT = 1;
 const TIMES = [1, 5, 10, 30, 60, 120]; // Seconds
-const SPEED = 50;
+const SPEED = 1;
 
 const errors = {};
 const sim_dist = {};
-let actual_dist = {};
 
 let sim_time = 0;
 let sim_iterator = 0;
@@ -19,6 +18,10 @@ let time_iterator = 0;
 let first_sim = true;
 let running_sims = true;
 let ball;
+
+function get_actual_dist(recorded_time) {
+  return 0.5 * G * recorded_time * recorded_time;
+}
 
 function give_sim_time() {
   let time = 0;
@@ -29,10 +32,6 @@ function give_sim_time() {
 }
 
 function setup() {
-  for (let i = 0; i < TIMES.length; i++) {
-    actual_dist[TIMES[i]] = 0.5 * G * TIMES[i] * TIMES[i];
-  }
-
   for (let i = 0; i < TIMES.length; i++) {
     sim_dist[TIMES[i]] = [];
     errors[TIMES[i]] = [];
@@ -65,7 +64,7 @@ function draw(current_time) {
         first_sim = false;
       } else {
         let saved_dist = ball.pos.y;
-        let calc_dist = actual_dist[TIMES[time_iterator]];
+        let calc_dist = get_actual_dist(sim_time)
         let error = Math.abs(saved_dist - calc_dist);
 
         sim_dist[TIMES[time_iterator]].push(saved_dist);
