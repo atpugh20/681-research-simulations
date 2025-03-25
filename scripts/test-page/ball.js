@@ -2,7 +2,7 @@ class Ball {
     constructor(x = 0, y = 0, radius = 5, color = "white") {
         this.pos = new Vector(x, y);
         this.vel = new Vector;
-        this.acc = new Vector(0, 9800);
+        this.acc = new Vector(0, 9806.55);
         this.radius = radius;
         this.color = color;
         this.friction = 0.8;
@@ -14,12 +14,12 @@ class Ball {
          * and acceleration attributes.
          */
 
-        this.vel.addVector(this.acc.getMult(delta_time));
-        this.pos.addVector(this.vel.getMult(delta_time));
+        this.vel = this.vel.add(this.acc.mult(delta_time));
+        this.pos = this.pos.add(this.vel.mult(delta_time));
 
         // Handle wall collision  
         if (this.pos.y > canvas_length - this.radius) {
-            this.pos.y = canvas_length - this.radius; 
+            this.pos.y = canvas_length - this.radius;
             this.vel.x *= this.friction;
             this.vel.y *= -this.friction;
         }
@@ -29,7 +29,7 @@ class Ball {
             this.vel.y *= -this.friction;
         }
         if (this.pos.x > canvas_length - this.radius) {
-            this.pos.x = canvas_length - this.radius; 
+            this.pos.x = canvas_length - this.radius;
             this.vel.x *= -this.friction;
             this.vel.y *= this.friction;
         }

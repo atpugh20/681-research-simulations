@@ -5,8 +5,8 @@ let last_frame_time = 0;
 const RADIUS = 10;
 const G = 9.80655;
 const SIM_COUNT = 1;
-const TIMES = [1, 5, 10, 30, 60, 120]; // Seconds
-const SPEED = 1;
+const TIMES = [1000]; // Seconds
+const SPEED = 100;
 
 const errors = {};
 const sim_dist = {};
@@ -20,7 +20,7 @@ let running_sims = true;
 let ball;
 
 function get_actual_dist(recorded_time) {
-  return 0.5 * G * recorded_time * recorded_time;
+  return 0.5 * G * (recorded_time * recorded_time);
 }
 
 function give_sim_time() {
@@ -46,6 +46,12 @@ function draw(current_time) {
   clearCanvas();
   delta_time = (current_time - last_frame_time) / 1000;
   last_frame_time = current_time;
+
+  // Prevent the sim_time from going over the target time
+  if (sim_time + delta_time > TIMES[time_iterator]) {
+    delta_time = TIMES[time_iterator] - sim_time;
+  }
+
   delta_time *= SPEED;
 
   // Start simulations
@@ -81,7 +87,7 @@ function draw(current_time) {
       // Reset ball to top of canvas
       sim_time = 0;
       ball.pos.y = 0;
-      ball.vel.mult(0);
+      ball.vel.y = 0;
     }
 
     // Check if the final sim has been completed

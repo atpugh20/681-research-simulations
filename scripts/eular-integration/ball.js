@@ -9,8 +9,8 @@ class Ball {
 
   update(delta_time) {
     // Eular method for the numerical integration
-    this.vel.addVector(this.acc.getMult(delta_time));
-    this.pos.addVector(this.vel.getMult(delta_time));
+    this.vel = this.vel.add(this.acc.mult(delta_time));
+    this.pos = this.pos.add(this.vel.mult(delta_time));
   }
 
   draw(ctx) {

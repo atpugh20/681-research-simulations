@@ -13,13 +13,13 @@ let sim_iterator = 0;
 const sim_dist = {};
 const errors = {};
 
-const TIMES = [1, 5, 10, 30, 60, 120];
-const SIM_COUNT = 1;
+const TIMES = [1000];
+const SIM_COUNT = 5;
 const G = 9.80655;
-const SPEED = 1;
+const SPEED = 100;
 
 function get_actual_dist(recorded_time) {
-    return 0.5 * G * recorded_time * recorded_time;
+    return 0.5 * G * (recorded_time * recorded_time);
 }
 
 function setup() {
@@ -39,6 +39,13 @@ function draw(current_time) {
     clearCanvas();
     delta_time = (current_time - last_frame_time) / 1000;
     last_frame_time = current_time;
+
+    // Prevent the sim_time from going over the target time
+    if (sim_time + delta_time > TIMES[time_iterator]) {
+        delta_time = TIMES[time_iterator] - sim_time;
+    }
+
+    delta_time *= SPEED;
 
     if (running_sims) {
         ball.update(delta_time);
