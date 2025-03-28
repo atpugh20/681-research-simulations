@@ -13,7 +13,7 @@ let sim_iterator = 0;
 const sim_dist = {};
 const errors = {};
 
-const TIMES = [1, 5, 10, 30];
+const TIMES = [1, 5, 10, 60];
 const SIM_COUNT = 1;
 const G = 9.80655;
 const SPEED = 1;
@@ -62,7 +62,7 @@ function draw(current_time) {
             } else {
                 const saved_dist = ball.pos.y;
                 const calc_dist = get_actual_dist(sim_time);
-                const error = saved_dist - calc_dist;
+                const error = Math.abs(saved_dist - calc_dist);
 
                 sim_iterator++;
                 console.log(`Time: ${sim_time}s`);
@@ -74,7 +74,7 @@ function draw(current_time) {
 
             // Reset ball position
             ball.pos.y = 0;
-            ball.old_pos.y = 0;
+            ball.vel.y = 0;
             sim_time = 0;
         }
 

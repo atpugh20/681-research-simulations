@@ -14,7 +14,7 @@ const actual_dist = {};
 const sim_dist = {};
 const errors = {};
 
-const TIMES = [1, 5, 10, 30];
+const TIMES = [1, 5, 10, 60];
 const SIM_COUNT = 1;
 const G = 9.80655;
 const SPEED = 1;

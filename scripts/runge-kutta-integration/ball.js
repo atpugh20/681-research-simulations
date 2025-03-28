@@ -8,13 +8,11 @@ class Ball {
     }
 
     update(delta_time) {
-
         let k1 = this.vel;
         let k2 = this.vel.add(this.acc.mult(delta_time / 2));
         let k3 = this.vel.add(this.acc.mult(delta_time / 2));
         let k4 = this.vel.add(this.acc.mult(delta_time));
 
-        this.vel = this.vel.add(this.acc.mult(delta_time));
         this.pos = this.pos.add(
             k1.add(
                 k2.mult(2).add(
@@ -23,6 +21,8 @@ class Ball {
                     )
                 )
             ).mult(delta_time / 6));
+
+        this.vel = this.vel.add(this.acc.mult(delta_time));
     }
 
     draw(ctx) {

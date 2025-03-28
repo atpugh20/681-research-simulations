@@ -1,25 +1,21 @@
 class Ball {
     constructor(x = 0, y = 0, radius = 5, color = "white") {
         this.pos = new Vector(x, y);
-        this.old_pos = this.pos.clone();
-        this.acc = new Vector(0, 9.80655);
+        this.vel = new Vector(0, 0);
+        this.acc = new Vector(0, G);
 
         this.radius = radius;
         this.color = color;
     }
 
     update(delta_time) {
-        /**
-         * This updates the time using Verlet Integration. The equation is:
-         * new_pos = 2 * current_pos - old_pos + acc * (dt)^2
-         */
-        let new_pos = this.pos
-            .mult(2)
-            .sub(this.old_pos)
-            .add(this.acc.mult(delta_time * delta_time));
-
-        this.old_pos = this.pos.clone();
-        this.pos = new_pos;
+        this.pos = this.pos.add(
+            this.vel.mult(delta_time)
+        ).add(
+            this.acc.mult(0.5)
+                .mult(delta_time * delta_time)
+        );
+        this.vel = this.vel.add(this.acc.mult(delta_time));
     }
 
     draw(ctx) {
