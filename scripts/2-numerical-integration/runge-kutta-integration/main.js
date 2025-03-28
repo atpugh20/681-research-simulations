@@ -50,7 +50,7 @@ function draw(current_time) {
     if (running_sims) {
 
         // Update ball for new frame
-        ball.update(delta_time);
+        ball.rk4(delta_time);
         ball.draw(ctx);
 
         sim_time += delta_time;

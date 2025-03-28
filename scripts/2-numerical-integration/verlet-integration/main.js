@@ -48,7 +48,7 @@ function draw(current_time) {
     // Start simulations
     if (running_sims) {
         // Update ball for new frame
-        ball.update(delta_time);
+        ball.verlet(delta_time);
         ball.draw(ctx);
 
         // Update the current sim time

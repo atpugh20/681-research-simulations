@@ -47,7 +47,7 @@ function draw(current_time) {
   // Start simulations
   if (running_sims) {
     // Update ball for new frame
-    ball.update(delta_time);
+    ball.euler(delta_time);
     ball.draw(ctx);
 
     // Update current sim time
@@ -71,7 +71,7 @@ function draw(current_time) {
         console.log(`Sim Distance: ${saved_dist}m`);
         console.log(`Cal Distance: ${calc_dist}m`);
         console.log(`Abs Error: ${error}m`);
-        console.log("----------------------------------------");
+        console.log("---------------------------------");
       }
 
       // Reset ball to top of canvas
