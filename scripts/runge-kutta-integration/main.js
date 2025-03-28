@@ -10,6 +10,7 @@ let ball;
 let time_iterator = 0;
 let sim_iterator = 0;
 
+const actual_dist = {};
 const sim_dist = {};
 const errors = {};
 
@@ -18,19 +19,19 @@ const SIM_COUNT = 1;
 const G = 9.80655;
 const SPEED = 1;
 
+
 function get_actual_dist(recorded_time) {
     return 0.5 * G * (recorded_time * recorded_time);
 }
 
 function setup() {
-    ball = new Ball(canvas_width / 2);
-
-    // Get Calc times
-
     for (let i = 0; i < TIMES.length; i++) {
         sim_dist[TIMES[i]] = [];
         errors[TIMES[i]] = [];
+        actual_dist[TIMES[i]] = get_actual_dist(TIMES[i]);
     }
+
+    ball = new Ball(canvas_width / 2);
 }
 
 function draw(current_time) {
@@ -47,22 +48,26 @@ function draw(current_time) {
 
     // Start simulations
     if (running_sims) {
+
         // Update ball for new frame
         ball.update(delta_time);
         ball.draw(ctx);
 
-        // Update the current sim time
         sim_time += delta_time;
 
-        // If enough time has passed, log it, then move to next time
+        // If the right time has passed, log it, then move to next time
         if (sim_time >= TIMES[time_iterator]) {
-            // Skip first sim due to time inaccuracy
+
+            // Skip first simulation due to time inaccuracy
             if (first_sim) {
                 first_sim = false;
             } else {
                 const saved_dist = ball.pos.y;
-                const calc_dist = get_actual_dist(sim_time);
-                const error = saved_dist - calc_dist;
+                const calc_dist = actual_dist[TIMES[time_iterator]];
+                const error = Math.abs(saved_dist - calc_dist);
+
+                sim_dist[TIMES[time_iterator]].push(saved_dist);
+                errors[TIMES[time_iterator]].push(error);
 
                 sim_iterator++;
                 console.log(`Time: ${sim_time}s`);
@@ -73,25 +78,28 @@ function draw(current_time) {
             }
 
             // Reset ball position
-            ball.pos.y = 0;
-            ball.old_pos.y = 0;
             sim_time = 0;
+            ball.pos.y = 0;
+            ball.vel.y = 0;
         }
 
+        // Check if the final sim has been completed
         if (sim_iterator == SIM_COUNT) {
             time_iterator++;
             sim_iterator = 0;
         }
 
+        // Check if the final test has been completed
         if (time_iterator == TIMES.length) {
             console.log("Finished.");
             console.log(sim_dist);
             console.log(errors);
             running_sims = false;
         }
+
+        requestAnimationFrame(draw);
     }
 
-    requestAnimationFrame(draw);
 }
 
 function main() {

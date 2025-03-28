@@ -2,7 +2,7 @@ class Ball {
   constructor(x = 0, y = 0, radius = 5, color = "white") {
     this.pos = new Vector(x, y);
     this.vel = new Vector(0, 0);
-    this.acc = new Vector(0, 9.80665);
+    this.acc = new Vector(0, G);
     this.radius = radius;
     this.color = color;
   }

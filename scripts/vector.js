@@ -17,7 +17,7 @@ class Vector {
     }
 
     div(scalar) {
-        return new Vector(thix.x / scalar, this.y / scalar);
+        return new Vector(this.x / scalar, this.y / scalar);
     }
 
     getMag() {
