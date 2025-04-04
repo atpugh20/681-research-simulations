@@ -18,6 +18,7 @@ class Ball {
         /**
          * Uses Velocity Verlet
          */
+        
         this.pos = this.pos.add(
             this.vel.mult(delta_time)
         ).add(

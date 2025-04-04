@@ -8,6 +8,7 @@ const sim_dist = {};
 let sim_time = 0;
 let sim_iterator = 0;
 let time_iterator = 0;
+let frame_iterator = 0;
 
 let first_sim = true;
 let running_sims = true;
@@ -47,6 +48,8 @@ function draw(current_time) {
   // Start simulations
   if (running_sims) {
     // Update ball for new frame
+    frame_iterator++;
+
     ball.euler(delta_time);
     ball.draw(ctx);
 
@@ -67,11 +70,14 @@ function draw(current_time) {
         errors[TIMES[time_iterator]].push(error);
 
         sim_iterator++;
+        console.log(`Frames: ${frame_iterator}`);
         console.log(`Time: ${sim_time}s`);
         console.log(`Sim Distance: ${saved_dist}m`);
         console.log(`Cal Distance: ${calc_dist}m`);
         console.log(`Abs Error: ${error}m`);
         console.log("---------------------------------");
+
+        frame_iterator = 0;
       }
 
       // Reset ball to top of canvas
