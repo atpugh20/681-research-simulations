@@ -84,6 +84,7 @@ function draw(current_time) {
       sim_time = 0;
       ball.pos.y = 0;
       ball.vel.y = 0;
+      ball.old_pos.y = 0;
     }
 
     // Check if the final sim has been completed

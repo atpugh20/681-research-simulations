@@ -1,6 +1,7 @@
 class Ball {
     constructor(x = 0, y = 0, radius = 5, color = "white") {
         this.pos = new Vector(x, y);
+        this.old_pos = this.pos.clone();
         this.vel = new Vector(0, 0);
         this.acc = new Vector(0, G);
 
@@ -14,11 +15,11 @@ class Ball {
         this.vel = this.vel.add(this.acc.mult(delta_time));
     }
 
-    verlet(delta_time) {
+    vel_verlet(delta_time) {
         /**
          * Uses Velocity Verlet
          */
-        
+
         this.pos = this.pos.add(
             this.vel.mult(delta_time)
         ).add(
@@ -26,6 +27,18 @@ class Ball {
                 .mult(delta_time * delta_time)
         );
         this.vel = this.vel.add(this.acc.mult(delta_time));
+    }
+
+    verlet(delta_time) {
+        let dt2 = delta_time * delta_time;
+
+        let new_pos = this.pos
+            .mult(2)
+            .sub(this.old_pos)
+            .add(this.acc.mult(dt2));
+
+        this.old_pos = this.pos.clone();
+        this.pos = new_pos;
     }
 
     rk4(delta_time) {
