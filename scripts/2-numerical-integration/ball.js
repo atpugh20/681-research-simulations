@@ -15,7 +15,7 @@ class Ball {
         this.vel = this.vel.add(this.acc.mult(delta_time));
     }
 
-    vel_verlet(delta_time) {
+    velVerlet(delta_time) {
         /**
          * Uses Velocity Verlet
          */
