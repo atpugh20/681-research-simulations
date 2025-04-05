@@ -1,54 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>681 Research Simulations</title>
-    <link rel="stylesheet" href="./styles/styles.css">
-</head>
-<body>
+    <link rel="stylesheet" href="./styles/styles.css" />
+  </head>
+  <body>
+    <!-- Container -->
     <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <h1 class="title-text default-text-color">681 Research Simulations</h1>
-        </div>
+      <!-- Header -->
+      <div class="header">
+        <h1 class="title-text default-text-color">681 Research Simulations</h1>
+      </div>
 
-        <!-- Test Page -->
-        <div class="button-list">
-            <a href="./views/test-page.html" class="home-link default-text-color">Test Page</a>
-        </div> 
-
-        <!-- Numerical Integration  -->
-        <div class="section">
-            <h2 class="section-header default-text-color">Numerical Integration</h3>
-            <div class="button-list">
-                <a href="./views/numerical-integration/euler-integration.html" class="home-link default-text-color">Euler Integration</a>
-                <a href="./views/numerical-integration/verlet-integration.html" class="home-link default-text-color">Vertlet Integration</a>
-                <a href="./views/numerical-integration/rk4-integration.html" class="home-link default-text-color">Runge-Kutta (RK4)</a>
-                <a href="./views/numerical-integration/speed.html" class="home-link default-text-color">Speed Test</a>
-
-            </div>
-        </div>
-
-        <!-- Collision Detection -->
-        <div class="section">
-            <h2 class="section-header default-text-color">Collision Detection</h3>
-            <div class="button-list">
-                <a href="./views/collision-detection/distance-check.html" class="home-link default-text-color">Distance Check</a>
-                <a href="./views/collision-detection/continuous-detection.html" class="home-link default-text-color">Continuous Detection</a>
-                <a href="./views/collision-detection/SAT.html" class="home-link default-text-color">Separating Axis Theorem (SAT)</a>
-            </div>
-        </div> 
-
-        <!-- Fluid Simulation -->
-        <div class="section">
-            <h2 class="section-header default-text-color">Fluid Simulation</h3>
-            <div class="button-list">
-                <a href="" class="home-link default-text-color">Eulerian Grid</a>
-                <a href="" class="home-link default-text-color">Smoothed Particle Hydrodynamics</a>
-                <a href="" class="home-link default-text-color">Stable Fluids (Jos Stam)</a>
-            </div>
-        </div> 
+      <canvas id="canvas"></canvas>
     </div>
-</body>
+
+    <!-- Scripts -->
+    <script src="./scripts/canvas.js"></script>
+    <script src="./scripts/vector.js"></script>
+    <script src="./scripts/ball.js"></script>
+    <script src="./scripts/main.js"></script>
+  </body>
 </html>

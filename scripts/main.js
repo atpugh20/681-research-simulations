@@ -19,7 +19,6 @@ const SIM_COUNT = 1;
 const TIMES = [1, 5, 10, 30]; // Seconds
 const SPEED = 1;
 
-
 function get_dist(recorded_time) {
   return 0.5 * G * (recorded_time * recorded_time);
 }
@@ -50,7 +49,7 @@ function draw(current_time) {
     // Update ball for new frame
     frame_iterator++;
 
-    ball.euler(delta_time);
+    ball.rk4(delta_time);
     ball.draw(ctx);
 
     // Update current sim time
@@ -63,7 +62,7 @@ function draw(current_time) {
         first_sim = false;
       } else {
         const saved_dist = ball.pos.y;
-        const calc_dist = get_dist(sim_time)
+        const calc_dist = get_dist(sim_time);
         const error = Math.abs(saved_dist - calc_dist);
 
         sim_dist[TIMES[time_iterator]].push(saved_dist);
@@ -104,6 +103,14 @@ function draw(current_time) {
 
   requestAnimationFrame(draw);
 }
+
+// TODO
+// 1. Leave canvas blank on entry
+// 2. Have buttons for
+//  a. Test
+//  b. Euler, stormer, velverlet, rk4
+//  c. Speed
+// 3. Potential buttons for integration and collision
 
 function main() {
   setup();
