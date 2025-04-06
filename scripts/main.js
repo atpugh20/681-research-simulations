@@ -1,3 +1,8 @@
+const euler_button = document.getElementById("euler-button");
+const stormer_button = document.getElementById("stormer-button");
+const vel_verlet_button = document.getElementById("vel-button");
+const rk4_button = document.getElementById("rk4-button");
+
 const canvas_width = (canvas.width = 200);
 let delta_time;
 let last_frame_time = 0;
@@ -11,7 +16,8 @@ let time_iterator = 0;
 let frame_iterator = 0;
 
 let first_sim = true;
-let running_sims = true;
+let running_sims = false;
+let method = "e";
 let ball;
 
 const G = 9.80655;
@@ -45,11 +51,27 @@ function draw(current_time) {
   delta_time *= SPEED;
 
   // Start simulations
-  if (running_sims) {
+  if (method != "e") {
     // Update ball for new frame
     frame_iterator++;
 
-    ball.rk4(delta_time);
+    switch (method) {
+      case "a":
+        ball.euler(delta_time);
+        break;
+      case "b":
+        ball.stormer(delta_time);
+        break;
+      case "c":
+        ball.velVerlet(delta_time);
+        break;
+      case "d":
+        ball.rk4(delta_time);
+        break;
+      default:
+        break;
+    }
+
     ball.draw(ctx);
 
     // Update current sim time
@@ -116,5 +138,21 @@ function main() {
   setup();
   requestAnimationFrame(draw);
 }
+
+euler_button.addEventListener("click", () => {
+  method = "a";
+});
+
+stormer_button.addEventListener("click", () => {
+  method = "b";
+});
+
+vel_verlet_button.addEventListener("click", () => {
+  method = "c";
+});
+
+rk4_button.addEventListener("click", () => {
+  method = "d";
+});
 
 main();
