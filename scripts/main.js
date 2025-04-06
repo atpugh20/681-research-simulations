@@ -103,9 +103,7 @@ function draw(current_time) {
 
       // Reset ball to top of canvas
       sim_time = 0;
-      ball.pos.y = 0;
-      ball.vel.y = 0;
-      ball.old_pos.y = 0;
+      ball.reset();
     }
 
     // Check if the final sim has been completed
@@ -119,7 +117,10 @@ function draw(current_time) {
       console.log("Finished.");
       console.log(sim_dist);
       console.log(errors);
-      running_sims = false;
+
+      time_iterator = 0;
+      sim_iterator = 0;
+      method = "e";
     }
   }
 
@@ -140,19 +141,29 @@ function main() {
 }
 
 euler_button.addEventListener("click", () => {
-  method = "a";
+  if (method == "e")
+    method = "a";
 });
 
 stormer_button.addEventListener("click", () => {
-  method = "b";
+  if (method == "e") {
+    ball.reset();
+    method = "b";
+  }
 });
 
 vel_verlet_button.addEventListener("click", () => {
-  method = "c";
+  if (method == "e") {
+    ball.reset();
+    method = "c";
+  }
 });
 
 rk4_button.addEventListener("click", () => {
-  method = "d";
+  if (method == "e") {
+    method = "d";
+    ball.reset();
+  }
 });
 
 main();

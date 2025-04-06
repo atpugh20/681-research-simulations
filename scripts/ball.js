@@ -57,4 +57,10 @@ class Ball {
     ctx.arc(this.pos.x, this.pos.y, this.radius, 0, 2 * Math.PI);
     ctx.fill();
   }
+
+  reset() {
+    this.pos.y = 0;
+    this.vel.y = 0;
+    this.old_pos.y = 0;
+  }
 }
