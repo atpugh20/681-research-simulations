@@ -40,8 +40,8 @@ class Ball {
      * Uses the fourth order Runge-Kutta method.
      */
     let k1 = this.vel;
-    let k2 = this.vel.add(this.acc.mult(delta_time / 2));
-    let k3 = this.vel.add(this.acc.mult(delta_time / 2));
+    let k2 = this.vel.add(this.acc.mult(delta_time).div(2));
+    let k3 = this.vel.add(this.acc.mult(delta_time).div(2));
     let k4 = this.vel.add(this.acc.mult(delta_time));
 
     this.pos = this.pos.add(
