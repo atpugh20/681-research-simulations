@@ -1,9 +1,11 @@
 class Ball {
   constructor(x = 0, y = 0, radius = 5, color = "white") {
     this.pos = new Vector(x, y);
-    this.old_pos = this.pos.clone();
     this.vel = new Vector(0, 0);
     this.acc = new Vector(0, G);
+
+
+    this.old_pos = this.pos.clone();
 
     this.radius = radius;
     this.color = color;
@@ -16,12 +18,9 @@ class Ball {
   }
 
   stormer(delta_time) {
-    let dt2 = delta_time * delta_time;
-
-    let new_pos = this.pos.mult(2).sub(this.old_pos).add(this.acc.mult(dt2));
-
-    this.old_pos = this.pos.clone();
-    this.pos = new_pos;
+    let new_pos = this.pos.mult(2).sub(this.old_pos).add(this.acc.mult(delta_time * delta_time));
+    this.old_pos.y = this.pos.y;
+    this.pos.y = new_pos;
   }
 
   velVerlet(delta_time) {

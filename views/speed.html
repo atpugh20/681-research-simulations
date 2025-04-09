@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../styles/styles.css" />
+    <title>Test Canvas</title>
+  </head>
+  <body>
+    <div class="">
+      <a href="../index.html" class="back-button default-text-color">Back</a>
+    
+      <div class="container">
+<div class="header">
+        <h1 class="title-text default-text-color">Speed Tests</h1>
+      </div>
+
+      <table class="default-text-color">
+        <tr>
+            <th>Method</th>
+            <th>Average time across 50 drops (each with 1,000,000 steps)</th>
+        </tr>
+        <tr>
+            <td>Euler</td>
+            <td id="euler-data">0.0</td>
+        </tr>
+        <tr>
+            <td>Stormer Verlet</td>
+            <td id="stormer-data">0.0</td>
+        </tr>
+        <tr>
+            <td>Velocity Verlet</td>
+            <td id="verlet-data">0.0</td>
+        </tr>
+        <tr>
+            <td>Runge-Kutta 4</td>
+            <td id="rk4-data">0.0</td>
+        </tr>
+      </table>
+
+      </div>
+          </div>
+
+    <script src="../scripts/vector.js"></script>
+    <script src="../scripts/ball.js"></script>
+    <script src="../scripts/speed.js"></script>
+
+  </body>
+</html>

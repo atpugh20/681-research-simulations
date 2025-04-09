@@ -10,9 +10,13 @@ function measureTime(method_name = "euler", steps, delta_time) {
             for (let i = 0; i < steps; i++)
                 ball.euler(delta_time);
             break;
+        case "stormer":
+            for (let i = 0; i < steps; i++)
+                ball.stormer(delta_time);
+            break;
         case "verlet":
             for (let i = 0; i < steps; i++)
-                ball.verlet(delta_time);
+                ball.velVerlet(delta_time);
             break;
         case "rk4":
             for (let i = 0; i < steps; i++)
@@ -36,10 +40,10 @@ function getAverage(input_array) {
 
 function main() {
     const delta_time = 0.01;
-    const steps = 100000;
-    const simulations = 1000;
+    const steps = 1000000;
+    const simulations = 50;
 
-    const methods = ["euler", "verlet", "rk4"];
+    const methods = ["euler", "stormer", "verlet", "rk4"];
     const speeds = {};
 
     for (let i = 0; i < methods.length; i++) {
@@ -49,10 +53,8 @@ function main() {
             speeds[m].push(measureTime(m, steps, delta_time));
         }
 
-        console.log(m + "\t" + getAverage(speeds[m]));
+        document.getElementById(m + "-data").innerText = getAverage(speeds[m]) + " ms";
     }
 }
 
 main();
-
-
